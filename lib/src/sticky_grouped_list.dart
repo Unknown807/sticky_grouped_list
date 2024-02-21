@@ -378,7 +378,7 @@ class StickyGroupedListViewState<T, E>
         color:
             widget.floatingHeader ? null : widget.stickyHeaderBackgroundColor,
         width: widget.floatingHeader ? null : MediaQuery.of(context).size.width,
-        child: widget.groupSeparatorBuilder(sortedElements[topElement]),
+        child: widget.groupSeparatorBuilder(topElement),
       );
     }
     return Container();
