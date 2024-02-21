@@ -364,12 +364,21 @@ class StickyGroupedListViewState<T, E>
   Widget _showFixedGroupHeader(int index) {
     if (widget.elements.isNotEmpty && index < sortedElements.length) {
       _groupHeaderKey = GlobalKey();
+
+      // Taken from similar fix to grouped_list at: https://github.com/Dimibe/grouped_list/pull/110/commits/74a3303f813b6dc82f1d723fbe5a44145a7407da
+      T topElement;
+      try {
+        topElement = sortedElements[index];
+      } on RangeError catch (_) {
+        topElement = sortedElements[0];
+      }
+      
       return Container(
         key: _groupHeaderKey,
         color:
             widget.floatingHeader ? null : widget.stickyHeaderBackgroundColor,
         width: widget.floatingHeader ? null : MediaQuery.of(context).size.width,
-        child: widget.groupSeparatorBuilder(sortedElements[index]),
+        child: widget.groupSeparatorBuilder(sortedElements[topElement]),
       );
     }
     return Container();
